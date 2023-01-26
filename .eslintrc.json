@@ -1,0 +1,226 @@
+{
+    "env": {
+        "browser": true
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "import",
+        "import-helpers"
+    ],
+    "rules": {
+        // yoda style
+        "yoda": [
+            "error",
+            "always"
+        ],
+        // blank line at the end of the file
+        "eol-last": [
+            "error",
+            "always"
+        ],
+        // 4 spaces identation
+        "indent": [
+            "error",
+            4,
+            { "SwitchCase": 1 }
+        ],
+        // \n eol
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        // single quotes
+        "quotes": [
+            "error",
+            "single"
+        ],
+        // semicolons at the end of every statement
+        "semi": [
+            "error",
+            "always"
+        ],
+        // always add parenthesis in arrow functions
+        "arrow-parens": [
+            "error",
+            "always"
+        ],
+        // add spaces inside braces
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+
+        "arrow-spacing": "warn",
+        "block-spacing": "warn",
+        "function-call-argument-newline": ["warn", "consistent"],
+        "func-call-spacing": "warn",
+        "max-statements-per-line": "warn",
+        "newline-per-chained-call": "warn",
+        "no-multi-spaces": "warn",
+        "template-curly-spacing": ["warn", "never"],
+        "no-whitespace-before-property": "warn",
+        "no-trailing-spaces": "warn",
+        "no-multiple-empty-lines": [
+            "warn",
+            { "max": 1, "maxBOF": 0 }
+        ],
+
+        "template-tag-spacing": "warn",
+
+        "prefer-arrow-callback": [
+            "warn",
+            { "allowNamedFunctions": true }
+        ],
+        "prefer-exponentiation-operator": "warn",
+        "prefer-promise-reject-errors": [
+            "warn",
+            { "allowEmptyReject": true }
+        ],
+        "prefer-rest-params": "warn",
+        "prefer-spread": "warn",
+        "quote-props": [
+            "warn",
+            "consistent-as-needed"
+        ],
+        "require-await": "warn",
+        "require-yield": "warn",
+        "comma-spacing": "warn",
+        "computed-property-spacing": "warn",
+        "dot-location": [
+            "warn",
+            "property"
+        ],
+        "function-paren-newline": [
+            "warn",
+            "multiline-arguments"
+        ],
+        "generator-star-spacing": [
+            "warn",
+            { "before": false, "after": true }
+        ],
+        "implicit-arrow-linebreak": "warn",
+        "key-spacing": "warn",
+        "keyword-spacing": "warn",
+        "lines-between-class-members": [
+            "warn",
+            "always",
+            { "exceptAfterSingleLine": true }
+        ],
+        "padded-blocks": [
+            "warn",
+            "never"
+        ],
+        "rest-spread-spacing": "warn",
+        "space-before-blocks": "warn",
+        "space-in-parens": "warn",
+        "space-unary-ops": "warn",
+        "switch-colon-spacing": "warn",
+        "wrap-iife": [
+            "warn",
+            "any"
+        ],
+        "yield-star-spacing": [
+            "warn",
+            "after"
+        ],
+
+        "array-bracket-newline": ["warn", { "multiline": true }],
+        "array-element-newline": ["warn", "consistent"],
+        "comma-dangle": ["warn", "always-multiline"],
+        "prefer-const": "warn",
+        "no-self-compare": "error",
+        "no-duplicate-imports": "warn",
+        "no-constant-binary-expression": "error",
+        "no-unreachable-loop": "error",
+        "no-template-curly-in-string": "warn",
+        "default-param-last": "warn",
+        "dot-notation": "warn",
+        "curly": ["warn", "all"],
+        "brace-style": "warn",
+        "eqeqeq": ["error", "smart"],
+        "no-nested-ternary": "warn",
+        "no-unneeded-ternary": "warn",
+        "new-cap": "warn",
+        "multiline-ternary": ["warn", "always-multiline"],
+        "operator-linebreak": [
+            "warn",
+            "after",
+            {
+                "overrides": {
+                    "?": "before",
+                    ":": "before"
+                }
+            }
+        ],
+        "no-empty": "warn",
+        "no-extra-semi": "warn",
+        "no-extra-parens": [
+            "warn",
+            "functions"
+        ],
+        "no-lonely-if": "warn",
+        "no-lone-blocks": "warn",
+        "no-unused-expressions": [
+            "warn",
+            {
+                "allowShortCircuit": true
+            }
+        ],
+        "no-useless-rename": "warn",
+        "no-var": "error",
+        "no-mixed-operators": "warn",
+        "prefer-template": "warn",
+        "object-curly-newline": ["warn"],
+        "object-property-newline": [
+            "warn",
+            {
+                "allowAllPropertiesOnSameLine": true
+            }
+        ],
+        "import-helpers/order-imports": [
+            "warn",
+            {
+                "newlinesBetween": "always",
+                "groups": [
+                    "/^react/",
+                    "/^antd/",
+                    "module",
+                    "/^@shared/",
+                    [
+                        "parent",
+                        "sibling",
+                        "index"
+                    ]
+                ],
+                "alphabetize": {
+                    "order": "asc",
+                    "ignoreCase": true
+                }
+            }
+        ]
+    },
+    "globals": {
+        "Set": "readonly",
+        "Promise": "readonly",
+        "Map": "readonly",
+        "require": "writable",
+        "process": "writable",
+        "module": "writable",
+        "describe": "readonly",
+        "it": "readonly",
+        "cy": "readonly",
+        "expect": "readonly",
+        "Cypress": "readonly",
+        "before": "readonly",
+        "beforeEach": "readonly",
+        "afterEach": "readonly",
+        "Float32Array": "readonly",
+        "__dirname": "readonly"
+    }
+}
