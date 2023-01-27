@@ -22,7 +22,7 @@ camera.position.z = 5;
 // Loaders
 const textureLoader = new THREE.TextureLoader();
 
-// Esfera
+// Sphere
 const sphereTexture = textureLoader.load('/textures/earth.jpg');
 const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 const sphereMaterial = new THREE.MeshStandardMaterial({
@@ -31,24 +31,30 @@ const sphereMaterial = new THREE.MeshStandardMaterial({
 const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
 scene.add(sphereMesh);
 
-// Add the stars to the scene
+// Particles
+const count = 1000000;
 const geometry = new THREE.BufferGeometry();
 const vertices = [];
-for (let i = 0; 1000000 > i; i++) {
+for (let i = 0; count > i; i++) {
     vertices.push(THREE.MathUtils.randFloatSpread(5000) * 5); // x
     vertices.push(THREE.MathUtils.randFloatSpread(5000) * 5); // y
     vertices.push(THREE.MathUtils.randFloatSpread(5000) * 5); // z
 }
 geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-const particles = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x888888 }));
+const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.07,
+    sizeAttenuation: false,
+    color: 0x888888,
+});
+const particles = new THREE.Points(geometry, particlesMaterial);
 scene.add(particles);
 
-// Controles
+// Controls
 const controls = new TrackballControls(camera, canvas);
 controls.dynamicDampingFactor = .05;
 controls.minDistance = 1.3;
 
-// Luzes
+// Lights
 const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(10, 0, 10);
 scene.add(light);

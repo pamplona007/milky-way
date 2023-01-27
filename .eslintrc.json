@@ -131,7 +131,6 @@
         ],
 
         "array-bracket-newline": ["warn", { "multiline": true }],
-        "array-element-newline": ["warn", "consistent"],
         "comma-dangle": ["warn", "always-multiline"],
         "prefer-const": "warn",
         "no-self-compare": "error",
