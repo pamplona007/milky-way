@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 
 import { Planet } from './components/Planet';
+import { planets } from './contants/planets';
 
 import './style.scss';
 
@@ -31,6 +32,9 @@ window.addEventListener('resize', () => {
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
+
+window.gui = new GUI();
+gui.domElement.id = 'gui';
 
 // Loader
 const textureLoader = new THREE.TextureLoader();
@@ -62,34 +66,6 @@ scene.add(ambientLight);
 // Controls
 const controls = new TrackballControls(camera, canvas);
 
-const earth = {
-    name: 'Earth',
-    radius: 1,
-    tilt: -10,
-    distance: 10,
-    rotationSpeed: 1,
-    translationSpeed: 0.1,
-    orbit: {
-        tilt: 0,
-        inclination: 0,
-        ellipse: 0.8,
-    },
-    texture: textureLoader.load('textures/earth.jpg'),
-    moons: [
-        {
-            name: 'Moon',
-            radius: 0.27,
-            tilt: 0,
-            distance: 2,
-            speed: 0.5,
-            texture: textureLoader.load('textures/moon.jpg'),
-        },
-    ],
-};
-
-const earthPlanet = new Planet(earth);
-scene.add(earthPlanet.group);
-
 // Helpers
 const gridHelper = new THREE.GridHelper(100, 100);
 gridHelper.visible = false;
@@ -103,21 +79,23 @@ const lightsHelper = new THREE.PointLightHelper(pointLight, 0.2);
 lightsHelper.visible = false;
 scene.add(lightsHelper);
 
-const gui = new GUI();
-gui.domElement.id = 'gui';
+// Planets
+const planetObjects = planets.map((planet) => {
+    planet.texture = textureLoader.load(planet.texture);
+    const planetObject = new Planet(planet);
+    scene.add(planetObject.mesh);
+    scene.add(planetObject.orbit);
+    return planetObject;
+});
+
 gui.close();
 gui.add(gridHelper, 'visible').name('Grid');
 gui.add(axesHelper, 'visible').name('Axes');
 gui.add(lightsHelper, 'visible').name('Lights');
 
-const planetsFolder = gui.addFolder('Planets');
-const earthFolder = planetsFolder.addFolder('Earth');
-earthFolder.add(earthPlanet, 'rotationSpeed', 0, 10, 0.01).name('Rotation Speed');
-earthFolder.add(earthPlanet, 'translationSpeed', 0, 10, 0.01).name('Translation Speed');
-
 const tick = () => {
     controls.update();
-    earthPlanet.update();
+    planetObjects.forEach((planet) => planet.update());
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
 };

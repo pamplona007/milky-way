@@ -220,6 +220,7 @@
         "beforeEach": "readonly",
         "afterEach": "readonly",
         "Float32Array": "readonly",
-        "__dirname": "readonly"
+        "__dirname": "readonly",
+        "gui": "writable"
     }
 }
