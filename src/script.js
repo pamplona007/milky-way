@@ -104,6 +104,7 @@ lightsHelper.visible = false;
 scene.add(lightsHelper);
 
 const gui = new GUI();
+gui.domElement.id = 'gui';
 gui.close();
 gui.add(gridHelper, 'visible').name('Grid');
 gui.add(axesHelper, 'visible').name('Axes');

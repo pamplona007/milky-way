@@ -13,6 +13,14 @@ body {
     height: 100%;
 }
 
+#gui {
+    display: none;
+
+    &:target {
+        display: block;
+    }
+}
+
 * {
     box-sizing: border-box;
 }
