@@ -1,5 +1,8 @@
+import GUI from 'lil-gui';
 import * as THREE from 'three';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
+
+import { Planet } from './components/Planet';
 
 import './style.scss';
 
@@ -17,7 +20,8 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-camera.position.z = 3;
+camera.position.z = 15;
+camera.position.y = 15;
 
 window.addEventListener('resize', () => {
     sizes.width = window.innerWidth;
@@ -30,15 +34,6 @@ window.addEventListener('resize', () => {
 
 // Loader
 const textureLoader = new THREE.TextureLoader();
-
-// Esfera
-const sphereTexture = textureLoader.load('/textures/earth.jpg');
-const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-const sphereMaterial = new THREE.MeshStandardMaterial({
-    map: sphereTexture,
-});
-const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-scene.add(sphere);
 
 // Particles
 const count = 1000000;
@@ -58,9 +53,8 @@ const particles = new THREE.Points(particlesGeometry, particlesMaterial);
 scene.add(particles);
 
 // Lights
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(10, 0, 10);
-scene.add(directionalLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+scene.add(pointLight);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
 scene.add(ambientLight);
@@ -68,12 +62,61 @@ scene.add(ambientLight);
 // Controls
 const controls = new TrackballControls(camera, canvas);
 
-const clock = new THREE.Clock();
+const earth = {
+    name: 'Earth',
+    radius: 1,
+    tilt: -10,
+    distance: 10,
+    rotationSpeed: 1,
+    translationSpeed: 0.1,
+    orbit: {
+        tilt: 0,
+        inclination: 0,
+        ellipse: 0.8,
+    },
+    texture: textureLoader.load('textures/earth.jpg'),
+    moons: [
+        {
+            name: 'Moon',
+            radius: 0.27,
+            tilt: 0,
+            distance: 2,
+            speed: 0.5,
+            texture: textureLoader.load('textures/moon.jpg'),
+        },
+    ],
+};
+
+const earthPlanet = new Planet(earth);
+scene.add(earthPlanet.group);
+
+// Helpers
+const gridHelper = new THREE.GridHelper(100, 100);
+gridHelper.visible = false;
+scene.add(gridHelper);
+
+const axesHelper = new THREE.AxesHelper(5);
+axesHelper.visible = false;
+scene.add(axesHelper);
+
+const lightsHelper = new THREE.PointLightHelper(pointLight, 0.2);
+lightsHelper.visible = false;
+scene.add(lightsHelper);
+
+const gui = new GUI();
+gui.close();
+gui.add(gridHelper, 'visible').name('Grid');
+gui.add(axesHelper, 'visible').name('Axes');
+gui.add(lightsHelper, 'visible').name('Lights');
+
+const planetsFolder = gui.addFolder('Planets');
+const earthFolder = planetsFolder.addFolder('Earth');
+earthFolder.add(earthPlanet, 'rotationSpeed', 0, 10, 0.01).name('Rotation Speed');
+earthFolder.add(earthPlanet, 'translationSpeed', 0, 10, 0.01).name('Translation Speed');
 
 const tick = () => {
     controls.update();
-    const elapsedTime = clock.getElapsedTime();
-    sphere.rotation.y = elapsedTime * 0.1;
+    earthPlanet.update();
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
 };
